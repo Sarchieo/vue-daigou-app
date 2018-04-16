@@ -29,7 +29,6 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
 import http from '../../http'
 // import qs from 'qs'
 export default{
@@ -44,23 +43,6 @@ export default{
     }
   },
   methods: {
-
-    login: function () {
-      let params = {
-        client_id: 'd484a494',
-        client_secret: '7a4464eb952cd3ab39a52dcf884c03bf0c276bb9104cf703f954ed1fca4f4adc',
-        grant_type: 'password',
-        username: 'hxbnzy@gmail.com',
-        password: 'az4821483'
-      }
-      axios.post('https://diycode.cc/oauth/token', params)
-        .then(response => {
-          console.log(response)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
     news: function () {
       let params = {
         offset: '0',

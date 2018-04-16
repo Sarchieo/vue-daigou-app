@@ -1,22 +1,11 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
-import * as types from './types'
-
+import UsersModule from './modules/userModule'
 Vue.use(Vuex)
+const debug = process.env.NODE_ENV !== 'production'
 export default new Vuex.Store({
-  state: {
-    user: {},
-    token: null,
-    title: ''
+  modules: {
+    userLogin: UsersModule
   },
-  mutations: {
-    [types.LOGIN]: (state, data) => {
-      localStorage.token = data
-      state.token = data
-    },
-    [types.LOGOUT]: (state) => {
-      localStorage.removeItem('token')
-      state.token = null
-    }
-  }
+  strict: debug // 是否开启严格模式
 })

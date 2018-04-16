@@ -9,6 +9,7 @@ import vuex from 'vuex'
 import VueAxios from 'vue-axios'
 import VueAuthenticate from 'vue-authenticate'
 import axios from 'axios'
+import store from './store/store'
 
 Vue.config.productionTip = false
 Vue.use(YDUI)
@@ -22,6 +23,7 @@ Vue.use(VueAuthenticate, {
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
