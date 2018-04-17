@@ -33,10 +33,7 @@ export default{
       this.$store.dispatch('login', {'username': this.username, 'password': this.password})
         .then(response => {
           if (response.status === 200) {
-            this.$dialog.notify({
-              mes: '登录成功 可以继续愉快的往下开发啦  (●ﾟωﾟ●)',
-              timeout: 3000
-            })
+            this.$router.push('/')
           } else {
             this.$dialog.notify({
               mes: response.data.error_description,

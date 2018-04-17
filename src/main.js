@@ -22,8 +22,8 @@ Vue.use(VueAuthenticate, {
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  router,
   store,
+  router,
   components: { App },
   template: '<App/>'
 })
