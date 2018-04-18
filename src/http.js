@@ -2,16 +2,14 @@
 
 import axios from 'axios'
 import store from './store/store.js'
-import * as types from './store/types'
 import qs from 'qs'
-import router from './router/index.js'
 
 axios.defaults.timeout = 5000
 axios.defaults.baseURL = 'https://diycode.cc/api/v3'
 
 axios.interceptors.request.use(config => {
-  if (store.state.token) {
-    config.headers.Authorization = `access_token${store.state.token}`
+  if (store.state.userLogin.userToken) {
+    config.headers.Authorization = `access_token${store.state.userLogin.userToken}`
   }
   return config
 }, error => {
@@ -24,11 +22,6 @@ axios.interceptors.response.use(response => {
   if (error.response) {
     switch (error.response.status) {
       case 401:
-        store.commit(types.LOGOUT)
-        router.replace({
-          path: 'login',
-          query: {redirect: router.currentRoute.fullPath}
-        })
         break
       default:
         break

@@ -43,28 +43,26 @@ export default{
     }
   },
   methods: {
-    news: function () {
-      let params = {
-        offset: '0',
-        limit: '20',
-        access_token: 'a3d02c41b3807909ce8a47a8c2b1f7ce023c4fdbcdbd43dda55e6f447239578e'
-      }
-      http.get('https://diycode.cc/api/v3/news.json', params)
+    // 获取news分类列表
+    newsNodes: function () {
+      http.get('/news/nodes.json')
         .then(response => {
+          this.$dialog.notify({
+            mes: '分类列表获取成功',
+            timeout: 3000
+          })
           console.log(response)
         })
         .catch(err => {
-          console.log(err)
+          this.$dialog.notify({
+            mes: 'news分类列表获取失败 error:' + err,
+            timeout: 3000
+          })
         })
     }
   },
   mounted: function () {
-    //    this.login(function (response) {
-    //      console.log(response)
-    //    })
-    this.news(function (response) {
-      console.log(response)
-    })
+    this.newsNodes()
   }
 }
 </script>

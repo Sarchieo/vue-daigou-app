@@ -9,14 +9,13 @@ import store from '../store/store'
 Vue.use(Router)
 const routes = [
   {
-    path: '/',
+    path: '',
     component: index,
     meta: {
       requireAuth: true
     },
     children: [
       {
-        name: '',
         path: '/home',
         component: home
       },
@@ -43,7 +42,7 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/login') {
       next()
     } else {
-      if (store.state.UserToken) {
+      if (store.state.userLogin.userToken) {
         next()
       } else {
         next({

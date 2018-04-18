@@ -3,15 +3,12 @@ import axios from 'axios'
 
 export default {
   state: {
-    currentUser: {
-      get UserToken () {
-        return localStorage.getItem('access_token')
-      }
-    }
+    userToken: {}
   },
   mutations: {
     setToken (state, accessToken) {
       localStorage.setItem('access_token', accessToken)
+      state.userToken = accessToken
     }
   },
   actions: {
