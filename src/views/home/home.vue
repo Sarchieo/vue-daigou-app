@@ -1,32 +1,24 @@
 <template>
   <div>
-    <yd-slider autoplay="3000">
-      <yd-slider-item>
-        <a href="http://www.ydcss.com">
-          <img src="http://img.ivsky.com/img/bizhi/pre/201801/21/darling_in_the_franxx-002.jpg">
-        </a>
-      </yd-slider-item>
-      <yd-slider-item>
-        <a href="http://www.ydcss.com">
-          <img src="http://img.ivsky.com/img/bizhi/pre/201801/21/darling_in_the_franxx-012.jpg">
-        </a>
-      </yd-slider-item>
-      <yd-slider-item>
-        <a href="http://www.ydcss.com">
-          <img src="http://img.ivsky.com/img/bizhi/pre/201801/21/darling_in_the_franxx-010.jpg">
-        </a>
-      </yd-slider-item>
-    </yd-slider>
-    <yd-list theme="5">
-      <!--<yd-list-item v-for="item, key in list" :key="key" style="height: 5rem">-->
-        <!--<img  slot="img" :src="item.img">-->
-        <!--<span slot="title">{{item.title}}</span>-->
-        <!--<yd-list-other slot="other">-->
-
-        <!--</yd-list-other>-->
-      <!--</yd-list-item>-->
-    </yd-list>
+    <yd-tab horizontal-scroll>
+      <yd-tab-panel label="Android"></yd-tab-panel>
+      <yd-tab-panel label="iOS"></yd-tab-panel>
+      <yd-tab-panel label="Swift"></yd-tab-panel>
+      <yd-tab-panel label="React"></yd-tab-panel>
+      <yd-tab-panel label="Ruby"></yd-tab-panel>
+      <yd-tab-panel label="PHP"></yd-tab-panel>
+      <yd-tab-panel label="F2E"></yd-tab-panel>
+      <yd-tab-panel label="Node"></yd-tab-panel>
+      <yd-tab-panel label="VR"></yd-tab-panel>
+      <yd-tab-panel label="Machine Learning"></yd-tab-panel>
+      <yd-tab-panel label="Interesting"></yd-tab-panel>
+      <yd-tab-panel label="Product"></yd-tab-panel>
+    </yd-tab>
+    <transition>
+      <router-view></router-view>
+    </transition>
   </div>
+
 </template>
 <script>
 import http from '../../http'
@@ -34,12 +26,7 @@ import http from '../../http'
 export default{
   data () {
     return {
-      list: [
-        {img: 'http://img.ivsky.com/img/bizhi/pre/201801/21/darling_in_the_franxx-001.jpg'},
-        {img: 'http://img.ivsky.com/img/bizhi/pre/201801/21/darling_in_the_franxx-008.jpg'},
-        {img: 'http://img.ivsky.com/img/bizhi/pre/201801/21/darling_in_the_franxx-013.jpg'},
-        {img: 'http://img.ivsky.com/img/bizhi/pre/201801/21/jiandui_collection-002.jpg'}
-      ]
+      nodes: []
     }
   },
   methods: {
@@ -52,6 +39,7 @@ export default{
             timeout: 3000
           })
           console.log(response)
+          this.nodes = response.data
         })
         .catch(err => {
           this.$dialog.notify({
