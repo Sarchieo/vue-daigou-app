@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import index from '@/views/index.vue'
 import home from '@/views/home/home.vue'
+import favorite from '@/views/favorite/favorite.vue'
+import find from '@/views/find/find.vue'
 import me from '@/views/me/me.vue'
 import login from '@/views/login.vue'
 import store from '../store/store'
@@ -9,15 +11,25 @@ import store from '../store/store'
 Vue.use(Router)
 const routes = [
   {
-    path: '',
+    path: '/',
     component: index,
     meta: {
       requireAuth: true
     },
     children: [
       {
-        path: '/home',
+        path: '',
         component: home
+      },
+      {
+        name: 'favorite',
+        path: '/favorite',
+        component: favorite
+      },
+      {
+        name: 'find',
+        path: '/find',
+        component: find
       },
       {
         name: 'me',

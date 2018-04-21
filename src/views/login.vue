@@ -33,7 +33,7 @@ export default{
       this.$store.dispatch('login', {'username': this.username, 'password': this.password})
         .then(response => {
           if (response.status === 200) {
-            this.$router.push('/home')
+            this.$router.push('/')
           } else {
             this.$dialog.notify({
               mes: response.data.error_description,

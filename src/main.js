@@ -11,8 +11,12 @@ import VueAuthenticate from 'vue-authenticate'
 import axios from 'axios'
 import store from './store/store'
 
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
+
 Vue.config.productionTip = false
 Vue.use(YDUI)
+Vue.use(MintUI)
 Vue.use(VueAxios, axios, vuex)
 Vue.use(VueAuthenticate, {
   baseUrl: 'https://diycode.cc/api/v3',

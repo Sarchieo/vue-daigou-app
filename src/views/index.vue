@@ -1,26 +1,39 @@
 <template>
-  <yd-layout>
-    <router-view></router-view>
-    <yd-tabbar slot="tabbar">
-      <yd-tabbar-item title="推荐" link="/home" active>
-        <yd-icon name="home" slot="icon"></yd-icon>
-      </yd-tabbar-item>
-      <yd-tabbar-item title="购物车" link="#">
-        <yd-icon name="shopcart-outline" slot="icon"></yd-icon>
-      </yd-tabbar-item>
-      <yd-tabbar-item title="个人中心" link="/me">
-        <yd-icon name="ucenter-outline" slot="icon"></yd-icon>
-      </yd-tabbar-item>
-    </yd-tabbar>
-  </yd-layout>
+  <!--<yd-layout>-->
+  <div>
+    <transition>
+      <router-view></router-view>
+    </transition>
+    <mt-tabbar v-model="selected">
+      <mt-tab-item id="/" >
+        <img slot="icon" src="../assets/jewelry.png">
+        推荐
+      </mt-tab-item>
+      <mt-tab-item id="/favorite">
+        <img slot="icon" src="../assets/favorite.png">
+        收藏
+      </mt-tab-item>
+      <mt-tab-item id="/find">
+        <img slot="icon" src="../assets/lights.png">
+        发现
+      </mt-tab-item>
+      <mt-tab-item id="/me">
+        <img slot="icon" src="../assets/bussiness-man.png">
+        我的
+      </mt-tab-item>
+    </mt-tabbar>
+  </div>
 </template>
 <script>
 export default{
   data () {
     return {
-      houseActive: true,
-      keepActive: false,
-      meActive: false
+      selected: '/'
+    }
+  },
+  watch: {
+    selected: function (val, oldvar) {
+      this.$router.push(val)
     }
   },
   methods: {}
