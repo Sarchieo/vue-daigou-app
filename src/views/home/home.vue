@@ -26,7 +26,8 @@ import http from '../../http'
 export default{
   data () {
     return {
-      nodes: []
+      nodes: [],
+      node_id: 1
     }
   },
   methods: {
@@ -34,11 +35,6 @@ export default{
     newsNodes: function () {
       http.get('/news/nodes.json')
         .then(response => {
-          this.$dialog.notify({
-            mes: '分类列表获取成功',
-            timeout: 3000
-          })
-          console.log(response)
           this.nodes = response.data
         })
         .catch(err => {
@@ -47,10 +43,30 @@ export default{
             timeout: 3000
           })
         })
+    },
+    // 获取news列表
+    newsList: function () {
+      let params = {
+        node_id: this.node_id
+      }
+      http.get('/news.json', params)
+        .then(response => {
+          if (response.status === -404) {
+            this.$dialog.notify({
+              mes: 'news分类列表获取失败 error:' + response.msg,
+              timeout: 3000
+            })
+          }
+          console.log(response)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
   mounted: function () {
     this.newsNodes()
+    this.newsList()
   }
 }
 </script>
