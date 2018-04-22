@@ -1,9 +1,9 @@
 <template>
   <!--<yd-layout>-->
   <div>
-    <transition>
+    <keep-alive>
       <router-view></router-view>
-    </transition>
+    </keep-alive>
     <mt-tabbar v-model="selected">
       <mt-tab-item id="/" >
         <img slot="icon" src="../assets/jewelry.png">

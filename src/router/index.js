@@ -19,7 +19,14 @@ const routes = [
     children: [
       {
         path: '',
-        component: home
+        component: home,
+        children: [
+          {
+            name: 'one',
+            path: '/one',
+            component: favorite
+          }
+        ]
       },
       {
         name: 'favorite',
