@@ -31,86 +31,11 @@
         </div>
       </div>
     </div>
-    <div class="swiper-container" id="page">
-
-      <!--<div class="swiper-wrapper">-->
-        <!--<div class="swiper-slide slidepage">-->
-          <!--<div class="swiper-container scroll">-->
-            <!--<div class="swiper-wrapper">-->
-              <!--<div class="swiper-slide slidescroll">-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="swiper-slide slidepage">-->
-          <!--<div class="swiper-container scroll">-->
-            <!--<div class="swiper-wrapper">-->
-              <!--<div class="swiper-slide slidescroll">slide3</div></div>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="swiper-slide slidepage">-->
-          <!--<div class="swiper-container scroll">-->
-            <!--<div class="swiper-wrapper">-->
-              <!--<div class="swiper-slide slidescroll">slide4</div></div>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="swiper-slide slidepage">-->
-          <!--<div class="swiper-container scroll">-->
-            <!--<div class="swiper-wrapper">-->
-              <!--<div class="swiper-slide slidescroll">slide5</div></div>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="swiper-slide slidepage">-->
-          <!--<div class="swiper-container scroll">-->
-            <!--<div class="swiper-wrapper">-->
-              <!--<div class="swiper-slide slidescroll">slide6</div></div>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="swiper-slide slidepage">-->
-          <!--<div class="swiper-container scroll">-->
-            <!--<div class="swiper-wrapper">-->
-              <!--<div class="swiper-slide slidescroll">slide7</div></div>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="swiper-slide slidepage">-->
-          <!--<div class="swiper-container scroll">-->
-            <!--<div class="swiper-wrapper">-->
-              <!--<div class="swiper-slide slidescroll">slide8</div></div>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="swiper-slide slidepage">-->
-          <!--<div class="swiper-container scroll">-->
-            <!--<div class="swiper-wrapper">-->
-              <!--<div class="swiper-slide slidescroll">slide9</div></div>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="swiper-slide slidepage">-->
-          <!--<div class="swiper-container scroll">-->
-            <!--<div class="swiper-wrapper">-->
-              <!--<div class="swiper-slide slidescroll">slide10</div></div>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="swiper-slide slidepage">-->
-          <!--<div class="swiper-container scroll">-->
-            <!--<div class="swiper-wrapper">-->
-              <!--<div class="swiper-slide slidescroll">slide11</div></div>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="swiper-slide slidepage">-->
-          <!--<div class="swiper-container scroll">-->
-            <!--<div class="swiper-wrapper">-->
-              <!--<div class="swiper-slide slidescroll">slide12</div></div>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="swiper-slide slidepage">-->
-          <!--<div class="swiper-container scroll">-->
-            <!--<div class="swiper-wrapper">-->
-              <!--<div class="swiper-slide slidescroll">slide13</div></div>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-    </div>
-
+    <transition :name="transitionName">
+      <keep-alive>
+        <router-view class="child-view"></router-view>
+      </keep-alive>
+    </transition>
   </div>
 
 </template>
@@ -130,13 +55,23 @@ export default{
       navSlideWidth: null,
       navWidth: null,
       topBar: null,
-      progress: null,
-      slideProgress: null,
-      activeIndex: null,
-      bar: null
+      bar: null,
+      transitionName: '',
+      childrenPage: [
+        {name: 'android', url: '/'},
+        {name: 'ios', url: '/ios'}
+      ]
     }
   },
   methods: {
+    jumpPage (index) {
+      this.$router.push(this.childrenPage[index].url)
+    },
+    onSwipeLeft () {
+      console.log('您老人家左滑了')
+    },
+    prev () {
+    },
     // 获取news分类列表
     newsNodes: function () {
       http.get('/news/nodes.json')
@@ -196,63 +131,40 @@ export default{
         }
       }
     })
-    var pageSwiper = new Swiper('#page', {
-      watchSlidesProgress: true,
-      resistanceRatio: 0,
-      on: {
-        touchMove: function () {
-          seif.progress = this.progress
-          seif.bar.transition(0)
-          seif.bar.transform('translateX(' + seif.navSum * this.progress + 'px)')
-          // 粉色255,72,145灰色51,51,51
-          for (let i = 0; i < this.slides.length; i++) {
-            this.slideProgress = this.slides[i].progress
-            if (Math.abs(this.slideProgress) < 1) {
-              let r = Math.floor((255 - 51) * (1 - Math.pow(Math.abs(this.slideProgress), 2)) + 51)
-              let g = Math.floor((72 - 51) * (1 - Math.pow(Math.abs(this.slideProgress), 2)) + 51)
-              let b = Math.floor((145 - 51) * (1 - Math.pow(Math.abs(this.slideProgress), 2)) + 51)
-              navSwiper.slides.eq(i).find('span').css('color', 'rgba(' + r + ',' + g + ',' + b + ',1)')
-            }
-          }
-        },
-        transitionStart: function () {
-          let activeIndex = this.activeIndex
-          let activeSlidePosition = navSwiper.slides[activeIndex].offsetLeft
-          // 释放时导航粉色条移动过渡
-          seif.bar.transition(seif.tSpeed)
-          seif.bar.transform('translateX(' + activeSlidePosition + 'px)')
-          // 释放时文字变色过渡
-          navSwiper.slides.eq(activeIndex).find('span').transition(seif.tSpeed)
-          navSwiper.slides.eq(activeIndex).find('span').css('color', 'rgba(255,72,145,1)')
-          if (activeIndex > 0) {
-            navSwiper.slides.eq(activeIndex - 1).find('span').transition(seif.tSpeed)
-            navSwiper.slides.eq(activeIndex - 1).find('span').css('color', 'rgba(51,51,51,1)')
-          }
-          if (activeIndex < this.slides.length) {
-            navSwiper.slides.eq(activeIndex + 1).find('span').transition(seif.tSpeed)
-            navSwiper.slides.eq(activeIndex + 1).find('span').css('color', 'rgba(51,51,51,1)')
-          }
-          // 导航居中
-          let navActiveSlideLeft = navSwiper.slides[activeIndex].offsetLeft // activeSlide距左边的距离
-
-          navSwiper.setTransition(seif.tSpeed)
-          if (navActiveSlideLeft < (seif.clientWidth - parseInt(seif.navSlideWidth)) / 2) {
-            navSwiper.setTranslate(0)
-          } else if (navActiveSlideLeft > seif.navWidth - (parseInt(seif.navSlideWidth) + seif.clientWidth) / 2) {
-            navSwiper.setTranslate(seif.clientWidth - seif.navWidth)
-          } else {
-            navSwiper.setTranslate((seif.clientWidth - parseInt(seif.navSlideWidth)) / 2 - navActiveSlideLeft)
-          }
-        }
-      }
-    })
     navSwiper.$el.on('touchstart', function (e) {
       e.preventDefault() // 去掉按压阴影
     })
     navSwiper.on('tap', function (e) {
       let clickIndex = this.clickedIndex
       let clickSlide = this.slides.eq(clickIndex)
-      pageSwiper.slideTo(clickIndex, 0)
+      let activeSlidePosition = navSwiper.slides[clickIndex].offsetLeft
+      // 路由跳转
+      seif.jumpPage(clickIndex)
+      // 释放时导航粉色条移动过渡
+      seif.bar.transition(seif.tSpeed)
+      seif.bar.transform('translateX(' + activeSlidePosition + 'px)')
+      // 释放时文字变色过渡
+      navSwiper.slides.eq(clickIndex).find('span').transition(seif.tSpeed)
+      navSwiper.slides.eq(clickIndex).find('span').css('color', 'rgba(255,72,145,1)')
+      if (clickIndex > 0) {
+        navSwiper.slides.eq(clickIndex - 1).find('span').transition(seif.tSpeed)
+        navSwiper.slides.eq(clickIndex - 1).find('span').css('color', 'rgba(51,51,51,1)')
+      }
+      if (clickIndex < this.slides.length) {
+        navSwiper.slides.eq(clickIndex + 1).find('span').transition(seif.tSpeed)
+        navSwiper.slides.eq(clickIndex + 1).find('span').css('color', 'rgba(51,51,51,1)')
+      }
+      // 导航居中
+      let navActiveSlideLeft = navSwiper.slides[clickIndex].offsetLeft // activeSlide距左边的距离
+
+      navSwiper.setTransition(seif.tSpeed)
+      if (navActiveSlideLeft < (seif.clientWidth - parseInt(seif.navSlideWidth)) / 2) {
+        navSwiper.setTranslate(0)
+      } else if (navActiveSlideLeft > seif.navWidth - (parseInt(seif.navSlideWidth) + seif.clientWidth) / 2) {
+        navSwiper.setTranslate(seif.clientWidth - seif.navWidth)
+      } else {
+        navSwiper.setTranslate((seif.clientWidth - parseInt(seif.navSlideWidth)) / 2 - navActiveSlideLeft)
+      }
       this.slides.find('span').css('color', 'rgba(51,51,51,1)')
       clickSlide.find('span').css('color', 'rgba(255,72,145,1)')
     })
@@ -283,10 +195,38 @@ export default{
     height:3px;
     background:#ff4891;
   }
-  .scroll {
-    height:100%;
+  .child-view {
+    position: absolute;
+    left:0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    transition: all .5s cubic-bezier(.55,0,.1,1);
+    background-color: #f2f2f2;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
   }
-  .slidescroll {
-    height:auto;
+  /* 当child-view的内容过多时会撑开child-view使得内部能够滚动 */
+  .slide-left-enter, .slide-right-leave-active {
+    opacity: 0;
+    -webkit-transform: translate(750/@g, 0);
+    transform: translate(750/@g, 0);
+    transition-delay: .5s;
+    -webkit-transition-delay: .5s;
+  }
+  .slide-left-leave-active, .slide-right-enter {
+    opacity: 0;
+    -webkit-transform: translate(-750/@g, 0);
+    transform: translate(-750/@g, 0);
+    transition-delay: .5s;
+    -webkit-transition-delay: .5s;
+  }
+  .slide-enter-active {
+    -webkit-transition: all .3s ease;
+    transition: all .3s ease;
+  }
+  .slide-leave-active {
+    -webkit-transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
   }
 </style>

@@ -6,6 +6,8 @@ import favorite from '@/views/favorite/favorite.vue'
 import find from '@/views/find/find.vue'
 import me from '@/views/me/me.vue'
 import login from '@/views/login.vue'
+import android from '@/views/home/children/android.vue'
+import ios from '@/views/home/children/ios.vue'
 import store from '../store/store'
 
 Vue.use(Router)
@@ -22,9 +24,12 @@ const routes = [
         component: home,
         children: [
           {
-            name: 'one',
-            path: '/one',
-            component: favorite
+            path: '',
+            component: android
+          },
+          {
+            path: '/ios',
+            component: ios
           }
         ]
       },
