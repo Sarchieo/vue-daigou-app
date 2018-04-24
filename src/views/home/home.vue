@@ -31,16 +31,13 @@
         </div>
       </div>
     </div>
-    <transition :name="transitionName">
-      <keep-alive>
-        <router-view class="child-view"></router-view>
-      </keep-alive>
-    </transition>
+    <keep-alive>
+      <router-view class="child-view"></router-view>
+    </keep-alive>
   </div>
 
 </template>
 <script>
-import http from '../../http'
 import 'swiper/dist/css/swiper.css'
 import Swiper from 'swiper'
 // import qs from 'qs'
@@ -56,7 +53,6 @@ export default{
       navWidth: null,
       topBar: null,
       bar: null,
-      transitionName: '',
       childrenPage: [
         {name: 'android', url: '/'},
         {name: 'ios', url: '/ios'}
@@ -66,48 +62,9 @@ export default{
   methods: {
     jumpPage (index) {
       this.$router.push(this.childrenPage[index].url)
-    },
-    onSwipeLeft () {
-      console.log('您老人家左滑了')
-    },
-    prev () {
-    },
-    // 获取news分类列表
-    newsNodes: function () {
-      http.get('/news/nodes.json')
-        .then(response => {
-          this.nodes = response.data
-        })
-        .catch(err => {
-          this.$dialog.notify({
-            mes: 'news分类列表获取失败 error:' + err,
-            timeout: 3000
-          })
-        })
-    },
-    // 获取news列表
-    newsList: function () {
-      let params = {
-        node_id: this.node_id
-      }
-      http.get('/news.json', params)
-        .then(response => {
-          if (response.status === -404) {
-            this.$dialog.notify({
-              mes: 'news分类列表获取失败 error:' + response.msg,
-              timeout: 3000
-            })
-          }
-          console.log(response)
-        })
-        .catch(err => {
-          console.log(err)
-        })
     }
   },
   created: function () {
-    this.newsNodes()
-    this.newsList()
   },
   mounted: function () {
     let seif = this
@@ -205,28 +162,5 @@ export default{
     background-color: #f2f2f2;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
-  }
-  /* 当child-view的内容过多时会撑开child-view使得内部能够滚动 */
-  .slide-left-enter, .slide-right-leave-active {
-    opacity: 0;
-    -webkit-transform: translate(750/@g, 0);
-    transform: translate(750/@g, 0);
-    transition-delay: .5s;
-    -webkit-transition-delay: .5s;
-  }
-  .slide-left-leave-active, .slide-right-enter {
-    opacity: 0;
-    -webkit-transform: translate(-750/@g, 0);
-    transform: translate(-750/@g, 0);
-    transition-delay: .5s;
-    -webkit-transition-delay: .5s;
-  }
-  .slide-enter-active {
-    -webkit-transition: all .3s ease;
-    transition: all .3s ease;
-  }
-  .slide-leave-active {
-    -webkit-transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
   }
 </style>

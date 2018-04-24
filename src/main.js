@@ -10,10 +10,9 @@ import VueAxios from 'vue-axios'
 import VueAuthenticate from 'vue-authenticate'
 import axios from 'axios'
 import store from './store/store'
-
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
-import VueTouch from 'vue-touch'
+var VueTouch = require('vue-touch')
 
 Vue.config.productionTip = false
 Vue.use(YDUI)
