@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div style="width:100%;height: 100%;background-color: aqua">
-      <mt-cell title="标题文字" icon="more" value="带 icon"></mt-cell>
-      <mt-cell title="标题文字" icon="more" value="带 icon"></mt-cell>
-      <mt-cell title="标题文字" icon="more" value="带 icon"></mt-cell>
+    <div  v-for="(item, index) in data" :key="index">
+      <mt-cell title="item.title" icon="more" value="带 icon"></mt-cell>
+      <!--<mt-cell title="标题文字" icon="more" value="带 icon"></mt-cell>-->
+      <!--<mt-cell title="标题文字" icon="more" value="带 icon"></mt-cell>-->
     </div>
   </div>
 
@@ -13,6 +13,7 @@ import http from '../../../http'
 export default{
   data () {
     return {
+      data: []
     }
   },
   methods: {
@@ -42,5 +43,9 @@ export default{
 }
 </script>
 <style>
-
+  .container{
+    width:100%;
+    height: 100%;
+    background-color: gainsboro;
+  }
 </style>

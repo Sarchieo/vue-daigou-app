@@ -32,7 +32,7 @@
       </div>
     </div>
     <keep-alive>
-      <router-view class="child-view"></router-view>
+      <router-view class="child-home-view"></router-view>
     </keep-alive>
   </div>
 
@@ -152,7 +152,8 @@ export default{
     height:3px;
     background:#ff4891;
   }
-  .child-view {
+  .child-home-view {
+    margin-top: 1rem;
     position: absolute;
     left:0;
     top: 0;
