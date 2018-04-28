@@ -1,15 +1,15 @@
 <template>
   <div class="container">
-    <div v-for="(item, index) in newList" :key="index">
-      <!--<ul class="flex-container">{{item.title}}</ul>-->
-      <div class="flex-container">
-        <img class="avatar" :src="item.user.avatar_url"/>
-        <div>
-          <ul>{{item.title}}</ul>
-          <ul>{{item.node_name}}</ul>
+      <div v-for="(item, index) in newList" :key="index">
+        <!--<ul class="flex-container">{{item.title}}</ul>-->
+        <div class="flex-container">
+          <img class="avatar" :src="item.user.avatar_url"/>
+          <div>
+            <ul>{{item.title}}</ul>
+            <ul>{{item.node_name}}</ul>
+          </div>
         </div>
       </div>
-    </div>
   </div>
 
 </template>
@@ -42,6 +42,13 @@ export default{
         .catch(err => {
           console.log(err)
         })
+    },
+    loadTop () {
+      this.$refs.loadmore.onTopLoaded()
+    },
+    loadBottom () {
+      this.allLoaded = true// if all data are loaded
+      this.$refs.loadmore.onBottomLoaded()
     }
   },
   created () {
