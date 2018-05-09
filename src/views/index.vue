@@ -67,9 +67,9 @@ export default{
   .slide-left-enter, .slide-right-leave-active {
     opacity: 0;
     -webkit-transform: translate(750/@g, 0);
-    transform: translate(750/@g, 0);
-    transition-delay: .5s;
-    -webkit-transition-delay: .5s;
+    transform:translate(750/@g, 0);
+    transition-delay:.5s;
+    -webkit-transition-delay:.5s;
   }
   .slide-left-leave-active, .slide-right-enter {
     opacity: 0;
