@@ -25,7 +25,6 @@ export default{
   methods: {
     // 获取news列表
     newsList: function () {
-      console.log('开始获取新数据了')
       let params = {
         node_id: this.node_id
       }

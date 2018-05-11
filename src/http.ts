@@ -1,16 +1,16 @@
 'use strict'
 
 import axios from 'axios'
-import store from './store/store.js'
+import store from './store/store'
 import qs from 'qs'
 
 axios.defaults.timeout = 5000
 axios.defaults.baseURL = 'https://diycode.cc/api/v3'
 
 axios.interceptors.request.use(config => {
-  if (store.state.userLogin.userToken) {
-    config.headers.Authorization = `access_token${store.state.userLogin.userToken}`
-  }
+  // if (store.state.users.userToken) {
+  //   config.headers.Authorization = `access_token${store.state.users.userToken}`
+  // }
   return config
 }, error => {
   return Promise.reject(error)

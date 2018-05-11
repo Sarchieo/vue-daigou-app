@@ -16,10 +16,10 @@
     </yd-button-group>
   </div>
 </template>
-<script>
-
+<script lang='ts'>
+import Vue from 'vue'
 // import * as types from '../store/types'
-export default{
+export default Vue.extend({
   data () {
     return {
       username: '',
@@ -28,8 +28,6 @@ export default{
   },
   methods: {
     login () {
-      // 验证登录数据格式
-      // 狼牙月 伊人憔悴  我举杯 饮尽了风雪 （TωT)
       this.$store.dispatch('login', {'username': this.username, 'password': this.password})
         .then(response => {
           if (response.status === 200) {
@@ -45,7 +43,7 @@ export default{
         })
     }
   }
-}
+})
 </script>
 <style>
   .bg {

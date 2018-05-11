@@ -26,8 +26,9 @@
     </mt-tabbar>
   </div>
 </template>
-<script>
-export default{
+<script lang='ts'>
+import Vue from 'vue'
+export default Vue.extend({
   data () {
     return {
       selected: '/',
@@ -44,7 +45,7 @@ export default{
       this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
     }
   }
-}
+})
 </script>
 <style>
   .container{
